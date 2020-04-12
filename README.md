@@ -1,5 +1,11 @@
 # Solution for the wargame bandit from [OverTheWire](https://overthewire.org/wargames/bandit)
 
+##### Table of Contents
+[Bandit Level 0](#level0)  
+[Bandit Level 0 -> 1](#level0_1)  
+[Bandit Level 1 -> 2](#level0_1) 
+
+<a name="level0"/>
 ## Bandit Level 0
 
 ### Level Goal
@@ -9,7 +15,7 @@ The goal of this level is for you to log into the game using SSH. The host to wh
 ```
 ssh bandit0@bandit.labs.overthewire.org -p 2220
 ```
-
+<a name="level0_1"/>
 ## Bandit Level 0 -> 1
 
 ### Level Goal
@@ -25,6 +31,7 @@ boJ9jbbUNNfktd78OOpsqOltutMc3MY1
 ```
 Password for the next level **boJ9jbbUNNfktd78OOpsqOltutMc3MY1**
 
+<a name="level1_2"/>
 ## Bandit Level 1 -> 2
 
 ### Level Goal
