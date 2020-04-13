@@ -377,7 +377,9 @@ drwxr-xr-x 41 root     root     4096 Oct 16  2018 ..
 -rw-r--r--  1 root     root     3526 May 15  2017 .bashrc
 -rw-r--r--  1 root     root      675 May 15  2017 .profile
 -rw-r-----  1 bandit14 bandit13 1679 Oct 16  2018 sshkey.private
+```
 
+```
 bandit13@bandit:~$ ssh -i sshkey.private bandit14@localhost
 
 bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
@@ -385,3 +387,20 @@ bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
 ```
 
 Password for the Level 14 **4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e**
+
+## Bandit Level 14 -> 15
+
+### Level Goal
+The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
+
+### Solution
+```
+ssh bandit13@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit14@bandit:~$ echo 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e | nc localhost 30000
+Correct!
+BfMYroe26WYalil77FoDi9qh59eK5xNr
+```
+
+Password for the Level 15 **BfMYroe26WYalil77FoDi9qh59eK5xNr**
