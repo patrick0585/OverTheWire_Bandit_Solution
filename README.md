@@ -748,7 +748,7 @@ To gain access to the next level, you should use the setuid binary in the homedi
 
 ### Solution
 ```
-ssh -i bandit19@bandit.labs.overthewire.org -p 2220
+ssh bandit19@bandit.labs.overthewire.org -p 2220
 ```
 ```
 bandit19@bandit:~$ ls -al
@@ -775,3 +775,191 @@ GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 ```
 
 Password for the Level 20 **GbKksEFF4yrVs6il55v6gwY5aVje5f0j**
+
+## Bandit Level 20 -> 21
+
+### Level Goal
+There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).
+
+NOTE: Try connecting to your own network daemon to see if it works as you think
+
+### Solution
+```
+ssh bandit20@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit20@bandit:~$ echo "GbKksEFF4yrVs6il55v6gwY5aVje5f0j" | nc -l localhost -p 3333 &
+```
+```
+bandit20@bandit:~$ ps aux | grep "3333"
+bandit20 16152  0.0  0.0  12784   960 pts/26   S+   12:48   0:00 grep 3333
+[1]+  Done                    echo "GbKksEFF4yrVs6il55v6gwY5aVje5f0j" | nc -l localhost -p 3333
+```
+```
+bandit20@bandit:~$ ./suconnect 3333
+Read: GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+Password matches, sending next password
+gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
+```
+
+Password for the Level 21 **gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr**
+
+## Bandit Level 21 -> 22
+
+### Level Goal
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+### Solution
+```
+ssh bandit21@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit21@bandit:~$ ls -al /etc/cron.d/
+total 28
+drwxr-xr-x  2 root root 4096 Dec  4 01:58 .
+drwxr-xr-x 88 root root 4096 Aug  3  2019 ..
+-rw-r--r--  1 root root  189 Jan 25  2017 atop
+-rw-r--r--  1 root root  120 Oct 16  2018 cronjob_bandit22
+-rw-r--r--  1 root root  122 Oct 16  2018 cronjob_bandit23
+-rw-r--r--  1 root root  120 Oct 16  2018 cronjob_bandit24
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+```
+```
+bandit21@bandit:~$ cat /usr/bin/cronjob_bandit22.sh 
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+```
+```
+bandit21@bandit:~$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
+```
+
+Password for the Level 22 **Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI**
+
+## Bandit Level 22 -> 23
+
+### Level Goal
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.
+
+### Solution
+```
+ssh bandit22@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit22@bandit:~$ ls -al /etc/cron.d
+total 28
+drwxr-xr-x  2 root root 4096 Dec  4 01:58 .
+drwxr-xr-x 88 root root 4096 Aug  3  2019 ..
+-rw-r--r--  1 root root  189 Jan 25  2017 atop
+-rw-r--r--  1 root root  120 Oct 16  2018 cronjob_bandit22
+-rw-r--r--  1 root root  122 Oct 16  2018 cronjob_bandit23
+-rw-r--r--  1 root root  120 Oct 16  2018 cronjob_bandit24
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+```
+```
+bandit22@bandit:~$ cat /etc/cron.d/cronjob_bandit23
+@reboot bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+* * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+```
+```
+bandit22@bandit:~$ cat /usr/bin/cronjob_bandit23.sh 
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+```
+```
+bandit22@bandit:~$ echo I am user bandit23 | md5sum | cut -d ' ' -f 1
+8ca319486bfbbc3663ea0fbe81326349
+```
+```
+bandit22@bandit:~$ cat /tmp/8ca319486bfbbc3663ea0fbe81326349
+jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
+```
+
+Password for the Level 23 **jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n**
+
+## Bandit Level 23 -> 24
+
+### Level Goal
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+NOTE: This level requires you to create your own first shell-script. This is a very big step and you should be proud of yourself when you beat this level!
+
+NOTE 2: Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…
+
+### Solution
+```
+ssh bandit23@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit23@bandit:~$ ls -al /etc/cron.d
+total 28
+drwxr-xr-x  2 root root 4096 Dec  4 01:58 .
+drwxr-xr-x 88 root root 4096 Aug  3  2019 ..
+-rw-r--r--  1 root root  189 Jan 25  2017 atop
+-rw-r--r--  1 root root  120 Oct 16  2018 cronjob_bandit22
+-rw-r--r--  1 root root  122 Oct 16  2018 cronjob_bandit23
+-rw-r--r--  1 root root  120 Oct 16  2018 cronjob_bandit24
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+```
+```
+bandit23@bandit:~$ cat /etc/cron.d/cronjob_bandit24
+@reboot bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+* * * * * bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+```
+```
+bandit23@bandit:~$ cat /usr/bin/cronjob_bandit24.sh 
+#!/bin/bash
+
+myname=$(whoami)
+
+cd /var/spool/$myname
+echo "Executing and deleting all scripts in /var/spool/$myname:"
+for i in * .*;
+do
+    if [ "$i" != "." -a "$i" != ".." ];
+    then
+	echo "Handling $i"
+	timeout -s 9 60 ./$i
+	rm -f ./$i
+    fi
+done
+```
+```
+bandit23@bandit:~$ mkdir /tmp/maxmustermann
+bandit23@bandit:~$ cd /tmp/maxmustermann
+```
+```
+bandit23@bandit:/tmp/maxmustermann$ touch getBandit24Pass.sh
+bandit23@bandit:/tmp/maxmustermann$ chmod 777 getBandit24Pass.sh
+bandit23@bandit:/tmp/maxmustermann$ cat getBandit24Pass.sh 
+#!/bin/bash
+cat /etc/bandit_pass/bandit24 > /tmp/maxmustermann/password
+```
+```
+bandit23@bandit:/tmp/maxmustermann$ touch password
+bandit23@bandit:/tmp/maxmustermann$ chmod 666 password 
+bandit23@bandit:/tmp/maxmustermann$ ls -al
+total 305928
+drwxr-sr-x 2 bandit23 root      4096 Apr 13 13:11 .
+drwxrws-wt 1 root     root 313204736 Apr 13 13:11 ..
+-rwxrwxrwx 1 bandit23 root        65 Apr 13 13:10 getBandit24Pass.sh
+-rw-rw-rw- 1 bandit23 root         0 Apr 13 13:11 password
+bandit23@bandit:/tmp/maxmustermann$ 
+```
+```
+bandit23@bandit:/tmp/maxmustermann$ cp getBandit24Pass.sh /var/spool/bandit24/
+```
+```
+bandit23@bandit:/tmp/maxmustermann$ cat password 
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
+```
+Password for the Level 24 **UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ**
