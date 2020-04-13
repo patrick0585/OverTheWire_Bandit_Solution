@@ -641,7 +641,7 @@ The password for the next level is stored in a file readme in the homedirectory.
 
 ### Solution
 ```
-ssh -i bandit18@bandit.labs.overthewire.org -p 2220
+ssh bandit18@bandit.labs.overthewire.org -p 2220
 
 Linux bandit 4.18.12 x86_64 GNU/Linux
                
