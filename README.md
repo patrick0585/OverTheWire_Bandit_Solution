@@ -1008,7 +1008,7 @@ Correct!
 The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
 ```
 
-Password for the Level 24 **uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG**
+Password for the Level 25 **uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG**
 
 ## Bandit Level 25 -> 26
 
@@ -1018,4 +1018,206 @@ Logging in to bandit26 from bandit25 should be fairly easy… The shell for user
 ### Solution
 ```
 ssh bandit25@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit25@bandit:~$ cat /etc/passwd | grep "bandit26"
+bandit26:x:11026:11026:bandit level 26:/home/bandit26:/usr/bin/showtext
+```
+```
+bandit25@bandit:~$ cat /usr/bin/showtext 
+#!/bin/sh
+
+export TERM=linux
+
+more ~/text.txt
+exit 0
+```
+```
+ssh -i bandit26.sshkey -t bandit26@localhost cat text.txt
+```
+Now that you have forces the terminal to prompt you to continue the display via “more” or “–More–(50%)” in this case, press “v” to enter “vim”, a built-in text editor on Unix machines
+```
+:e /etc/bandit_pass/bandit26
+```
+Password for the Level 26 **5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z**
+
+## Bandit Level 26 -> 27
+
+### Level Goal
+Good job getting a shell! Now hurry and grab the password for bandit27!
+
+### Solution
+```
+ssh bandit26@bandit.labs.overthewire.org -p 2220
+...
+    * checksec.sh (http://www.trapkit.de/tools/checksec.html) in /usr/local/bin/checksec.sh
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us through IRC on
+  irc.overthewire.org #wargames.
+
+  Enjoy your stay!
+
+  _                     _ _ _   ___   __  
+ | |                   | (_) | |__ \ / /  
+ | |__   __ _ _ __   __| |_| |_   ) / /_  
+ | '_ \ / _` | '_ \ / _` | | __| / / '_ \ 
+ | |_) | (_| | | | | (_| | | |_ / /| (_) |
+ |_.__/ \__,_|_| |_|\__,_|_|\__|____\___/ 
+Connection to bandit.labs.overthewire.org closed.
+```
+```
+:set shell=/bin/bash
+```
+```
+bandit26@bandit:~$ ls -la
+total 36
+drwxr-xr-x  3 root     root     4096 Oct 16  2018 .
+drwxr-xr-x 41 root     root     4096 Oct 16  2018 ..
+-rwsr-x---  1 bandit27 bandit26 7296 Oct 16  2018 bandit27-do
+-rw-r--r--  1 root     root      220 May 15  2017 .bash_logout
+-rw-r--r--  1 root     root     3526 May 15  2017 .bashrc
+-rw-r--r--  1 root     root      675 May 15  2017 .profile
+drwxr-xr-x  2 root     root     4096 Oct 16  2018 .ssh
+-rw-r-----  1 bandit26 bandit26  258 Oct 16  2018 text.txt
+bandit26@bandit:~$ ./bandit27-do 
+Run a command as another user.
+  Example: ./bandit27-do id
+bandit26@bandit:~$ ./bandit27-do id
+uid=11026(bandit26) gid=11026(bandit26) euid=11027(bandit27) groups=11026(bandit26)
+bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27
+3ba3118a22e93127a4ed485be72ef5ea
+```
+
+Password for the Level 27 **3ba3118a22e93127a4ed485be72ef5ea**
+
+## Bandit Level 27 -> 28
+
+### Level Goal
+There is a git repository at ssh://bandit27-git@localhost/home/bandit27-git/repo. The password for the user bandit27-git is the same as for the user bandit27.
+
+Clone the repository and find the password for the next level.
+
+### Solution
+```
+ssh bandit27@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit27@bandit:~$ mkdir -m 777 /tmp/muster1234
+bandit27@bandit:~$ cd /tmp/muster1234
+bandit27@bandit:/tmp/muster1234$ git clone ssh://bandit27-git@localhost/home/bandit27-git/repo
+Cloning into 'repo'...
+Could not create directory '/home/bandit27/.ssh'.
+The authenticity of host 'localhost (127.0.0.1)' can't be established.
+ECDSA key fingerprint is SHA256:98UL0ZWr85496EtCRkKlo20X3OPnyPSB5tB5RPbhczc.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/bandit27/.ssh/known_hosts).
+This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+
+bandit27-git@localhost's password: 
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (3/3), done.
+```
+```
+bandit27@bandit:/tmp/muster1234$ cat repo/README 
+The password to the next level is: 0ef186ac70e04ea33b4c1853d2526fa2
+```
+Password for the Level 28 **0ef186ac70e04ea33b4c1853d2526fa2**
+
+## Bandit Level 28 -> 29
+
+### Level Goal
+There is a git repository at ssh://bandit28-git@localhost/home/bandit28-git/repo. The password for the user bandit28-git is the same as for the user bandit28.
+
+### Solution
+```
+ssh bandit28@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit28@bandit:~$ mkdir -m 777 /tmp/musterbandit
+bandit28@bandit:~$ cd /tmp/musterbandit
+bandit28@bandit:/tmp/musterbandit$ git clone ssh://bandit28-git@localhost/home/bandit28-git/repo
+Cloning into 'repo'...
+Could not create directory '/home/bandit28/.ssh'.
+The authenticity of host 'localhost (127.0.0.1)' can't be established.
+ECDSA key fingerprint is SHA256:98UL0ZWr85496EtCRkKlo20X3OPnyPSB5tB5RPbhczc.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/bandit28/.ssh/known_hosts).
+This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+
+bandit28-git@localhost's password: 
+remote: Counting objects: 9, done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 9 (delta 2), reused 0 (delta 0)
+Receiving objects: 100% (9/9), done.
+Resolving deltas: 100% (2/2), done.
+```
+```
+bandit28@bandit:/tmp/musterbandit/repo$ cat README.md 
+# Bandit Notes
+Some notes for level29 of bandit.
+
+## credentials
+
+- username: bandit29
+- password: xxxxxxxxxx
+```
+```
+bandit28@bandit:/tmp/musterbandit/repo$ git log
+commit 073c27c130e6ee407e12faad1dd3848a110c4f95
+Author: Morla Porla <morla@overthewire.org>
+Date:   Tue Oct 16 14:00:39 2018 +0200
+
+    fix info leak
+
+commit 186a1038cc54d1358d42d468cdc8e3cc28a93fcb
+Author: Morla Porla <morla@overthewire.org>
+Date:   Tue Oct 16 14:00:39 2018 +0200
+
+    add missing data
+
+commit b67405defc6ef44210c53345fc953e6a21338cc7
+Author: Ben Dover <noone@overthewire.org>
+Date:   Tue Oct 16 14:00:39 2018 +0200
+
+    initial commit of README.md
+```
+```
+bandit28@bandit:/tmp/musterbandit/repo$ git log -p -1
+commit 073c27c130e6ee407e12faad1dd3848a110c4f95
+Author: Morla Porla <morla@overthewire.org>
+Date:   Tue Oct 16 14:00:39 2018 +0200
+
+    fix info leak
+
+diff --git a/README.md b/README.md
+index 3f7cee8..5c6457b 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for level29 of bandit.
+ ## credentials
+ 
+ - username: bandit29
+-- password: bbc96594b4e001778eee9975372716b2
++- password: xxxxxxxxxx
+
+```
+Password for the Level 29 **bbc96594b4e001778eee9975372716b2**
+
+## Bandit Level 29 -> 30
+
+### Level Goal
+There is a git repository at ssh://bandit29-git@localhost/home/bandit29-git/repo. The password for the user bandit29-git is the same as for the user bandit29.
+
+Clone the repository and find the password for the next level.
+
+### Solution
+```
+ssh bandit29@bandit.labs.overthewire.org -p 2220
 ```
