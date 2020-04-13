@@ -176,3 +176,212 @@ bandit6@bandit:~$ cat /var/lib/dpkg/info/bandit7.password
 HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
 ```
 Password for the Level 7 **HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs**
+
+## Bandit Level 7 -> 8
+
+### Level Goal
+The password for the next level is stored in the file data.txt next to the word millionth
+
+### Solution
+```
+ssh bandit7@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit7@bandit:~$ ls -al
+total 4108
+drwxr-xr-x  2 root    root       4096 Oct 16  2018 .
+drwxr-xr-x 41 root    root       4096 Oct 16  2018 ..
+-rw-r--r--  1 root    root        220 May 15  2017 .bash_logout
+-rw-r--r--  1 root    root       3526 May 15  2017 .bashrc
+-rw-r-----  1 bandit8 bandit7 4184396 Oct 16  2018 data.txt
+-rw-r--r--  1 root    root        675 May 15  2017 .profile
+```
+```
+bandit7@bandit:~$ grep "millionth" data.txt 
+millionth	cvX2JJa4CFALtqS87jk27qwqGhBM9plV
+```
+Password for the Level 8 **cvX2JJa4CFALtqS87jk27qwqGhBM9plV**
+
+## Bandit Level 8 -> 9
+
+### Level Goal
+The password for the next level is stored in the file data.txt and is the only line of text that occurs only once
+
+### Solution
+```
+ssh bandit8@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit8@bandit:~$ ls -al
+total 56
+drwxr-xr-x  2 root    root     4096 Oct 16  2018 .
+drwxr-xr-x 41 root    root     4096 Oct 16  2018 ..
+-rw-r--r--  1 root    root      220 May 15  2017 .bash_logout
+-rw-r--r--  1 root    root     3526 May 15  2017 .bashrc
+-rw-r-----  1 bandit9 bandit8 33033 Oct 16  2018 data.txt
+-rw-r--r--  1 root    root      675 May 15  2017 .profile
+```
+```
+bandit8@bandit:~$ sort data.txt | uniq -u
+UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
+```
+
+Password for the Level 9 **UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR**
+
+## Bandit Level 9 -> 10
+
+### Level Goal
+The password for the next level is stored in the file data.txt in one of the few human-readable strings, beginning with several ‘=’ characters.
+
+### Solution
+```
+ssh bandit9@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit9@bandit:~$ strings data.txt | grep "=="
+2========== the
+========== password
+========== isa
+========== truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk
+```
+Password for the Level 10 **truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk**
+
+## Bandit Level 10 -> 11
+
+### Level Goal
+The password for the next level is stored in the file data.txt, which contains base64 encoded data
+
+### Solution
+```
+ssh bandit10@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit10@bandit:~$ base64 --decode data.txt 
+The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
+```
+Password for the Level 11 **IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR**
+
+## Bandit Level 11 -> 12
+
+### Level Goal
+The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
+
+### Solution
+```
+ssh bandit11@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit11@bandit:~$ cat data.txt | tr '[a-zA-Z]' '[n-za-mN-ZA-M]'
+The password is 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
+```
+Password for the Level 12 **5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu**
+
+## Bandit Level 12 -> 13
+
+### Level Goal
+The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example: mkdir /tmp/myname123. Then copy the datafile using cp, and rename it using mv (read the manpages!)
+
+### Solution
+```
+ssh bandit12@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit12@bandit:~$ mkdir /tmp/maxmustermann123
+bandit12@bandit:~$ cd /tmp/maxmustermann123
+bandit12@bandit:/tmp/maxmustermann123$ cp ~/data.txt  .
+```
+```
+bandit12@bandit:/tmp/maxmustermann123$ xxd -r data.txt > first
+bandit12@bandit:/tmp/maxmustermann123$ file first 
+first: gzip compressed data, was "data2.bin", last modified: Tue Oct 16 12:00:23 2018, max compression, from Unix
+```
+```
+bandit12@bandit:/tmp/maxmustermann123$ mv first first.gz
+bandit12@bandit:/tmp/maxmustermann123$ gzip -d first.gz 
+bandit12@bandit:/tmp/maxmustermann123$ ls -al
+total 305932
+drwxr-sr-x 2 bandit12 root      4096 Apr 13 09:43 .
+drwxrws-wt 1 root     root 313204736 Apr 13 09:44 ..
+-rw-r----- 1 bandit12 root      2581 Apr 13 09:40 data.txt
+-rw-r--r-- 1 bandit12 root       572 Apr 13 09:42 first
+bandit12@bandit:/tmp/maxmustermann123$ file first 
+first: bzip2 compressed data, block size = 900k
+```
+```
+bandit12@bandit:/tmp/maxmustermann123$ mv first first.bz2
+bandit12@bandit:/tmp/maxmustermann123$ bzip2 -d first.bz2 
+bandit12@bandit:/tmp/maxmustermann123$ file first 
+first: gzip compressed data, was "data4.bin", last modified: Tue Oct 16 12:00:23 2018, max compression, from Unix
+```
+```
+bandit12@bandit:/tmp/maxmustermann123$ mv first first.gz
+bandit12@bandit:/tmp/maxmustermann123$ gzip -d first.gz 
+bandit12@bandit:/tmp/maxmustermann123$ file first 
+first: POSIX tar archive (GNU)
+```
+```
+bandit12@bandit:/tmp/maxmustermann123$ mv first first.tar
+bandit12@bandit:/tmp/maxmustermann123$ tar xvf first.tar 
+data5.bin
+bandit12@bandit:/tmp/maxmustermann123$ file first.tar 
+first.tar: POSIX tar archive (GNU)
+bandit12@bandit:/tmp/maxmustermann123$ file data5.bin 
+data5.bin: POSIX tar archive (GNU)
+```
+```
+bandit12@bandit:/tmp/maxmustermann123$ mv data5.bin data5.tar
+bandit12@bandit:/tmp/maxmustermann123$ tar xvf data5.tar 
+data6.bin
+bandit12@bandit:/tmp/maxmustermann123$ file data6.bin 
+data6.bin: bzip2 compressed data, block size = 900k
+```
+```
+bandit12@bandit:/tmp/maxmustermann123$ mv data6.bin data6.bz2
+bandit12@bandit:/tmp/maxmustermann123$ bzip2 -d data6.bz2 
+bandit12@bandit:/tmp/maxmustermann123$ file data6 
+data6: POSIX tar archive (GNU)
+```
+```
+bandit12@bandit:/tmp/maxmustermann123$ mv data6 data6.tar
+bandit12@bandit:/tmp/maxmustermann123$ tar xvf data6.tar 
+data8.bin
+bandit12@bandit:/tmp/maxmustermann123$ file data8.bin 
+data8.bin: gzip compressed data, was "data9.bin", last modified: Tue Oct 16 12:00:23 2018, max compression, from Unix
+```
+```
+bandit12@bandit:/tmp/maxmustermann123$ mv data8.bin data8.gz
+bandit12@bandit:/tmp/maxmustermann123$ gzip -d data8.gz 
+bandit12@bandit:/tmp/maxmustermann123$ file data8
+data8: ASCII text
+bandit12@bandit:/tmp/maxmustermann123$ cat data8
+The password is 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
+```
+
+Password for the Level 13 **8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL**
+
+## Bandit Level 13 -> 14
+
+### Level Goal
+The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Note: localhost is a hostname that refers to the machine you are working on
+
+### Solution
+```
+ssh bandit13@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit13@bandit:~$ ls -la
+total 24
+drwxr-xr-x  2 root     root     4096 Oct 16  2018 .
+drwxr-xr-x 41 root     root     4096 Oct 16  2018 ..
+-rw-r--r--  1 root     root      220 May 15  2017 .bash_logout
+-rw-r--r--  1 root     root     3526 May 15  2017 .bashrc
+-rw-r--r--  1 root     root      675 May 15  2017 .profile
+-rw-r-----  1 bandit14 bandit13 1679 Oct 16  2018 sshkey.private
+
+bandit13@bandit:~$ ssh -i sshkey.private bandit14@localhost
+
+bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
+4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
+```
+
+Password for the Level 14 **4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e**
