@@ -1488,3 +1488,65 @@ error: failed to push some refs to 'ssh://bandit31-git@localhost/home/bandit31-g
 ```
 
 Password for the Level 32 **56a9bf19c63d650ce78e6ec0354ee45e**
+
+## Bandit Level 32 -> 33
+
+### Level Goal
+After all this git stuff its time for another escape. Good luck!
+
+### Solution
+```
+ssh bandit32@bandit.labs.overthewire.org -p 2220
+....
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us through IRC on
+  irc.overthewire.org #wargames.
+
+  Enjoy your stay!
+
+WELCOME TO THE UPPERCASE SHELL
+>> ls -al
+sh: 1: LS: not found
+>> $0
+$ 
+$ pwd
+/home/bandit32
+$ ls -al *
+-rwsr-x--- 1 bandit33 bandit32 7556 Oct 16  2018 uppershell
+$ cat /etc/bandit_pass/bandit33
+c9c3199ddf4121b10cf581a98d51caee
+```
+Password for the Level 33 **c9c3199ddf4121b10cf581a98d51caee**
+
+## Bandit Level 33 -> 34
+
+### Level Goal
+At this moment, level 34 does not exist yet.
+
+### Solution
+```
+ssh bandit33@bandit.labs.overthewire.org -p 2220
+```
+```
+bandit33@bandit:~$ ls -al
+total 24
+drwxr-xr-x  2 root     root     4096 Oct 16  2018 .
+drwxr-xr-x 41 root     root     4096 Oct 16  2018 ..
+-rw-r--r--  1 root     root      220 May 15  2017 .bash_logout
+-rw-r--r--  1 root     root     3526 May 15  2017 .bashrc
+-rw-r--r--  1 root     root      675 May 15  2017 .profile
+-rw-------  1 bandit33 bandit33  430 Oct 16  2018 README.txt
+bandit33@bandit:~$ cat README.txt 
+Congratulations on solving the last level of this game!
+
+At this moment, there are no more levels to play in this game. However, we are constantly working
+on new levels and will most likely expand this game with more levels soon.
+Keep an eye out for an announcement on our usual communication channels!
+In the meantime, you could play some of our other wargames.
+
+If you have an idea for an awesome new level, please let us know!
+```
